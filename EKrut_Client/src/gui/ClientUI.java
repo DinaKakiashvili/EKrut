@@ -14,7 +14,7 @@ public class ClientUI extends Application
     
     public void start(final Stage primaryStage) throws Exception {
     	ClientOpeningScreenController cl = new ClientOpeningScreenController();
-    	System.out.println("startttt");
+    	System.out.println("starttt");
         cl.start(primaryStage);
         
     }
