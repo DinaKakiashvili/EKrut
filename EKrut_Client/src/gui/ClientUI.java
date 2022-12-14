@@ -16,7 +16,7 @@ public class ClientUI extends Application
     	ClientOpeningScreenController cl = new ClientOpeningScreenController();
     	System.out.println("natalie and dina");
     	System.out.println("check");
-    	System.out.println("sheker kolshehu");
+    	System.out.println("sheker kolshehuuu");
         cl.start(primaryStage);
         
     }
