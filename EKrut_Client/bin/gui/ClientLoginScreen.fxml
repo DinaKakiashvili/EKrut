@@ -46,7 +46,7 @@
                               <Font name="System Bold" size="17.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="passwordTxt" layoutX="114.0" layoutY="56.0" promptText="Password" />
+                        <TextField fx:id="passwordTxt" accessibleRole="PASSWORD_FIELD" layoutX="114.0" layoutY="56.0" promptText="Password" />
                         <Label layoutX="32.0" layoutY="52.0" prefHeight="40.0" prefWidth="106.0" text="Password">
                            <font>
                               <Font name="Candara" size="15.0" />
