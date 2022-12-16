@@ -12,6 +12,7 @@ import java.util.List;
 import common.*;
 import entities.ConnectedClient;
 import entities.Subscriber;
+import entities.Customer;
 import gui.*;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -43,45 +44,43 @@ public class QueryExecutor {
 	public static void updateClientInDatabase(MissionPack obj, Connection con) {
 		Subscriber subscriber = (Subscriber) obj.getInformation();
 		PreparedStatement ps = null;
-		boolean idExists=false;
-		
+		boolean idExists = false;
+
 		try {
 			ps = con.prepareStatement("SELECT subscriber.id FROM ekrut.subscriber;");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				if(rs.getString("id").equals(subscriber.getId()))
-				{
-						idExists=true;
-						break;
+				if (rs.getString("id").equals(subscriber.getId())) {
+					idExists = true;
+					break;
 				}
-						
+
 			}
 		} catch (SQLException sqlException) {
 			System.out.println("Statement failure");
 		}
-		
-		
-		if(subscriber.getId().isBlank()||!idExists)
-		{
+
+		if (subscriber.getId().isBlank() || !idExists) {
 			obj.setResponse(Response.EDIT_SUBSCRIBERS_FAILD);
 			return;
 		}
-			
+
 		try {
 			ps = con.prepareStatement(
 					"UPDATE ekrut.subscriber SET creditCardNumber = ?, subscriberNumber = ? WHERE id = ?");
 		} catch (SQLException sqlException) {
 			System.out.println("Statement failure");
 		}
-		
-	//	System.out.println(subscriber.getCreditCardNumber()+" "+subscriber.getSubscriberNumber()+" "+subscriber.getId());
+
+		// System.out.println(subscriber.getCreditCardNumber()+"
+		// "+subscriber.getSubscriberNumber()+" "+subscriber.getId());
 
 		try {
 			ps.setString(1, subscriber.getCreditCardNumber());
 			ps.setString(2, subscriber.getSubscriberNumber());
 			ps.setString(3, subscriber.getId());
 			ps.executeUpdate();
-			
+
 			obj.setInformation(subscriber);
 			obj.setResponse(Response.EDIT_SUBSCRIBERS_SUCCESS);
 		} catch (Exception exception) {
@@ -89,8 +88,7 @@ public class QueryExecutor {
 			System.out.println("Executing statement-Updating credit card and subscriber number has failed");
 			obj.setResponse(Response.EDIT_SUBSCRIBERS_FAILD);
 		}
-		
-		
+
 	}
 
 	public static void updateClientList(MissionPack obj, ConnectionToClient client, ClientStatus connectionStatus) {
@@ -118,57 +116,117 @@ public class QueryExecutor {
 	}
 
 	public static void identifyUser(MissionPack obj, Connection con) throws SQLException {
-		String[] data=(String[])obj.getInformation();
-		String username=data[0];
-		String password=data[1];
-		String role=null,phoneNumber=null,firstName=null;
-		String[] newData=new String[5];
-		
+		String[] data = (String[]) obj.getInformation();
+		String username = data[0];
+		String password = data[1];
+		String role = null, phoneNumber = null, firstName = null;
+		String[] newData = new String[5];
+
 		PreparedStatement ps = null;
-		boolean exists=false;
-		
+		boolean exists = false;
+
 		try {
 			ps = con.prepareStatement("SELECT users.username, password, role,phoneNumber,firstName FROM ekrut.users;");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				if(rs.getString("username").equals(username)&&rs.getString("password").equals(password))
-				{
-					exists=true;
-					role=rs.getString("role");
-					phoneNumber=rs.getString("phoneNumber");
-					firstName=rs.getString("firstName");
-					//System.out.println(username+" "+role);
+				if (rs.getString("username").equals(username) && rs.getString("password").equals(password)) {
+					exists = true;
+					role = rs.getString("role");
+					phoneNumber = rs.getString("phoneNumber");
+					firstName = rs.getString("firstName");
+					// System.out.println(username+" "+role);
 				}
-						
+
 			}
 		} catch (SQLException sqlException) {
 			System.out.println("Statement failure");
 		}
-		
-		if(exists==true)
-		{
+
+		if (exists == true) {
 			obj.setResponse(Response.LOGIN_SUCCEED);
-			newData[0]=username;
-			newData[1]=password;
-			newData[2]=role;
-			newData[3]=phoneNumber;
-			newData[4]=firstName;
-			
+			newData[0] = username;
+			newData[1] = password;
+			newData[2] = role;
+			newData[3] = phoneNumber;
+			newData[4] = firstName;
+
 			obj.setInformation(newData);
 			try {
 				ps = con.prepareStatement("UPDATE ekrut.users SET isLoggedIn=\"1\" WHERE id=?");
-				ps.setString(1,username);
-				ps.executeUpdate();	
-			}
-			catch (SQLException e) {
+				ps.setString(1, username);
+				ps.executeUpdate();
+			} catch (SQLException e) {
 				e.printStackTrace();
 				obj.setResponse(Response.LOGIN_FAILED);
-				}
-		}
-		else
-		{
+			}
+		} else {
 			obj.setResponse(Response.LOGIN_FAILED);
 		}
 	}
-	
+
+	public static void AddingNewCustomer(MissionPack obj, Connection con) {
+		PreparedStatement ps = null;
+		Customer ourcus = (Customer) obj.getInformation();
+		String username = ourcus.getId();
+		String password = "1234";
+		String FirstName = ourcus.getFirstName();
+		String LastName = ourcus.getLastName();
+		String EmailAddress = ourcus.getEmailAddress();
+		String PhoneNumber = ourcus.getPhoneNumber();
+		String ID = ourcus.getId();
+		try {
+
+			ps = con.prepareStatement(
+					"INSERT INTO ekrut.users (username,password,firstName,lastName,role,email,phoneNumber,isLoggedIn,storeName,id) VALUES (?,?,?,?,?,?,?,?,?,?);");
+			ps.setString(1, username);
+			ps.setString(2, password);
+			ps.setString(3, FirstName);
+			ps.setString(4, LastName);
+			ps.setString(5, "RequsestToBeCustomer");
+			ps.setString(6, EmailAddress);
+			ps.setString(7, PhoneNumber);
+			ps.setString(8, "0");
+			ps.setString(9, null);
+			ps.setString(10, ID);
+			ps.executeUpdate();
+			obj.setInformation(ourcus);
+			obj.setResponse(Response.ADD_CUSTOMER_DATA_SUCCESS);
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			System.out.println("Exception-Executing statement-Add CUSTOMER_DATA_FAILD");
+			obj.setResponse(Response.ADD_CUSTOMER_DATA_FAILD);
+		}
+	}
+
+	public static void changeToSubscriber(MissionPack obj, Connection con) {
+		PreparedStatement ps = null;
+		boolean NotExist = true;
+		String ID = (String) obj.getInformation();
+		try {
+			ps = con.prepareStatement("SELECT users.id,role FROM ekrut.users ;");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+
+				if (rs.getString("role").equals("customer")) {
+					ps = con.prepareStatement("UPDATE ekrut.users SET role=\"subscriber\" WHERE id=?");
+					ps.setString(1, ID);
+					ps.executeUpdate();
+					obj.setInformation(ID);
+					obj.setResponse(Response.FROM_CUSTOMER_TO_SUBSCRIBER_SUCCESS);
+					NotExist = false;
+					break;
+				}
+			}
+			if (NotExist) {
+				obj.setResponse(Response.FROM_CUSTOMER_TO_SUBSCRIBER_FAILD);
+				System.out.println("Executing statement-FROM_CUSTOMER_TO_SUBSCRIBER_FAILD");
+			}
+
+		} catch (SQLException sqlException) {
+			System.out.println("Exception- Executing statement-FROM_CUSTOMER_TO_SUBSCRIBER_FAILD");
+			obj.setResponse(Response.FROM_CUSTOMER_TO_SUBSCRIBER_FAILD);
+		}
+
+	}
+
 }

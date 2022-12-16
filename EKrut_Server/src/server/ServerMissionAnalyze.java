@@ -28,10 +28,20 @@ public class ServerMissionAnalyze {
 
 		case SEND_DISCONNECTION_DETAILS: {
 			QueryExecutor.updateClientList(obj, client, ClientStatus.DISCONNECTED);
+			break;
 		}
 		
 		case IDENTIFY_USER: {
 			QueryExecutor.identifyUser(obj,DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
+		}
+		case ADD_CUSTOMER_DATA: {
+			QueryExecutor.AddingNewCustomer(obj,DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
+		}
+		case FROM_CUSTOMER_TO_SUBSCRIBER: {
+			QueryExecutor.changeToSubscriber(obj,DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
 		}
 		
 		}

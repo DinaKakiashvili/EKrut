@@ -3,18 +3,12 @@ package entities;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Subscriber implements Serializable {
+public class Subscriber extends Customer implements Serializable {
 
-	private String id;
-	private String firstName;
-	private String lastName;
-	private String phoneNumber;
-	private String emailAddress;
-	private String creditCardNumber;
 	private String subscriberNumber;
 
 	public Subscriber() {
-
+		
 	}
 
 	public String getFirstName() {
@@ -74,16 +68,9 @@ public class Subscriber implements Serializable {
 		this.subscriberNumber = subscriberNumber;
 	}
 
-	public Subscriber(String id, String firstName, String lastName, String phoneNumber, String emailAddress,
-			String creditCardNumber, String subscriberNumber) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.id = id;
-		this.phoneNumber = phoneNumber;
-		this.emailAddress = emailAddress;
-		this.creditCardNumber = creditCardNumber;
-		this.subscriberNumber = subscriberNumber;
+	public Subscriber(String id, String firstName, String lastName, String phoneNumber, String emailAddress,String creditCardNumber, String SubscriberNumber) {
+		super(id,firstName,lastName,phoneNumber,emailAddress,creditCardNumber);
+		this.subscriberNumber = SubscriberNumber;
 	}
 
 	
