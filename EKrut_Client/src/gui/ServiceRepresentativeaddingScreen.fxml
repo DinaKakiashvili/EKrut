@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ServiceRepresentativeController">
+   <children>
+      <HBox layoutX="1.0" layoutY="-1.0" prefHeight="418.0" prefWidth="599.0">
+         <children>
+            <VBox maxHeight="420.0" prefHeight="423.0" prefWidth="201.0">
+               <children>
+                  <VBox prefHeight="194.0" prefWidth="179.0" style="-fx-background-color: #d3d3d3;">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="144.0" prefWidth="201.0" style="-fx-background-color: #96d3cd;">
+                           <children>
+                              <ImageView fitHeight="177.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../pictures/ekrutLogo.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="259.0" prefWidth="201.0" style="-fx-background-color: #96d3cd;">
+                     <children>
+                        <TextArea fx:id="userLog" prefHeight="125.0" prefWidth="201.0" style="-fx-background-color: FFBF7F;" text="&#10;Account status:&#10;confirmed as &#10;service representative" translateY="-60.0">
+                           <font>
+                              <Font name="Candara" size="12.0" />
+                           </font>
+                        </TextArea>
+                        <Label fx:id="statusLabel" prefHeight="21.0" prefWidth="199.0" textFill="#d71d1d" />
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <AnchorPane maxHeight="418.0" prefHeight="398.0" prefWidth="399.0" style="-fx-background-color: #cbe9e6;">
+               <children>
+                  <Button fx:id="logOut" layoutX="304.0" layoutY="366.0" mnemonicParsing="false" onAction="#logOut" prefHeight="38.0" prefWidth="89.0" style="-fx-background-color: #96d3cd;" text="Log Out">
+                     <font>
+                        <Font name="Candara Bold" size="18.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </Button>
+                  <ImageView fitHeight="44.0" fitWidth="55.0" layoutX="16.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/greyProgress.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="23.0" layoutY="18.0" text="Login" translateX="3.0">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="IDText" layoutX="117.0" layoutY="66.0" />
+                  <TextField fx:id="FirstNameText" layoutX="117.0" layoutY="111.0" />
+                  <TextField fx:id="LastNameText" layoutX="117.0" layoutY="154.0" />
+                  <TextField fx:id="PhoneNumberText" layoutX="117.0" layoutY="200.0" />
+                  <TextField fx:id="EmailAddressText" layoutX="117.0" layoutY="248.0" />
+                  <TextField fx:id="CreditCardNumberText" layoutX="117.0" layoutY="303.0" />
+                  <Button fx:id="AddCustomer" layoutX="18.0" layoutY="370.0" mnemonicParsing="false" onAction="#AddCustomer" prefHeight="34.0" prefWidth="136.0" style="-fx-background-color: #96d3cd;" styleClass="shadow" text="Add customer ">
+                     <font>
+                        <Font name="Candara Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="32.0" layoutY="71.0" text="ID" />
+                  <Label layoutX="6.0" layoutY="116.0" text="FirstName" />
+                  <Label layoutX="1.0" layoutY="159.0" text="LastName" />
+                  <Label layoutX="3.0" layoutY="205.0" text="PhoneNumber" />
+                  <Label layoutX="3.0" layoutY="253.0" text="EmailAddress" />
+                  <Label layoutX="4.0" layoutY="308.0" text="CreditCard" />
+                  <Button fx:id="back" layoutX="304.0" layoutY="9.0" mnemonicParsing="false" onAction="#Backtofirst" prefHeight="38.0" prefWidth="89.0" style="-fx-background-color: #96d3cd;" text="back">
+                     <font>
+                        <Font name="Candara Bold" size="18.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </Button>
+                  <ImageView fitHeight="43.0" fitWidth="136.0" layoutX="107.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/orangeProgress.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="120.0" layoutY="18.0" prefHeight="16.0" prefWidth="55.0" text="add ">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="44.0" fitWidth="55.0" layoutX="65.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/greyProgress.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="75.0" layoutY="18.0" text="Menu">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
