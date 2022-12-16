@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -25,7 +26,7 @@ public class ClientLoginScreenController implements EventHandler<WindowEvent> {
     private Button userLogin;
 
     @FXML
-    private TextField passwordTxt;
+    private PasswordField passwordTxt;
     
     @FXML
     private Label errorLabel;
