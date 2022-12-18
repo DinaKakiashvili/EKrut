@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.ChooseReportScreenController">
+   <children>
+      <HBox layoutX="1.0" layoutY="-1.0" prefHeight="418.0" prefWidth="599.0">
+         <children>
+            <VBox maxHeight="420.0" prefHeight="423.0" prefWidth="201.0">
+               <children>
+                  <VBox prefHeight="194.0" prefWidth="179.0" style="-fx-background-color: #d3d3d3;">
+                     <children>
+                        <HBox alignment="CENTER" prefHeight="144.0" prefWidth="201.0" style="-fx-background-color: #96d3cd;">
+                           <children>
+                              <ImageView fitHeight="177.0" fitWidth="178.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../pictures/ekrutLogo.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="259.0" prefWidth="201.0" style="-fx-background-color: #96d3cd;" />
+               </children>
+            </VBox>
+            <AnchorPane maxHeight="418.0" prefHeight="398.0" prefWidth="399.0" style="-fx-background-color: #cbe9e6;">
+               <children>
+                  <ImageView fitHeight="44.0" fitWidth="55.0" layoutX="13.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/greyProgress.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="19.0" layoutY="18.0" text="Login" translateX="3.0">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="selectYearLabel" alignment="CENTER" layoutX="30.0" layoutY="120.0" prefHeight="30.0" prefWidth="63.0" text="Select year">
+                     <font>
+                        <Font name="Cambria Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="selectMonthLabel" alignment="CENTER" layoutX="150.0" layoutY="121.0" prefHeight="30.0" prefWidth="74.0" text="Select month">
+                     <font>
+                        <Font name="Cambria Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="PickReportLabel" alignment="CENTER" layoutX="143.0" layoutY="202.0" prefHeight="46.0" prefWidth="118.0" text="Select report type">
+                     <font>
+                        <Font name="Cambria Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="pickYearComboBox" layoutX="15.0" layoutY="150.0" prefHeight="30.0" prefWidth="94.0" promptText="Year" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;" />
+                  <Label alignment="CENTER" layoutX="76.0" layoutY="66.0" prefHeight="46.0" prefWidth="251.0" text="Choose Report">
+                     <font>
+                        <Font name="Candara Bold Italic" size="28.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="selectFacilityLabel" alignment="CENTER" layoutX="273.0" layoutY="113.0" prefHeight="46.0" prefWidth="118.0" text="Select sales facility">
+                     <font>
+                        <Font name="Cambria Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="pickMonthComboBox" layoutX="143.0" layoutY="150.0" prefHeight="30.0" prefWidth="94.0" promptText="Month" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;" />
+                  <ComboBox fx:id="pickFacilityComboBox" layoutX="283.0" layoutY="148.0" prefHeight="30.0" prefWidth="94.0" promptText="Facility" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;" />
+                  <ComboBox fx:id="pickReportTypeComboBox" layoutX="128.0" layoutY="233.0" prefHeight="30.0" prefWidth="154.0" promptText="Type" style="-fx-background-color: #FFFFFF; -fx-background-radius: 30;" />
+                  <ImageView fitHeight="44.0" fitWidth="55.0" layoutX="62.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/greyProgress.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="72.0" layoutY="19.0" prefHeight="16.0" prefWidth="29.0" text="Menu">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="46.0" fitWidth="63.0" layoutX="106.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../pictures/orangeProgress.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="119.0" layoutY="25.0" text="Report">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="118.0" layoutY="15.0" prefHeight="16.0" prefWidth="43.0" text="Choose">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="viewBtn" layoutX="150.0" layoutY="345.0" mnemonicParsing="false" onAction="#Back" onMouseClicked="#clickOnViewReport" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #96d3cd;" text="View">
+                     <font>
+                        <Font name="Candara Bold" size="18.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="backBtn" layoutX="339.0" layoutY="17.0" mnemonicParsing="false" onAction="#Back" onMouseClicked="#clickOnBackBtn" prefHeight="26.0" prefWidth="45.0" style="-fx-background-color: #96d3cd; -fx-border-color: #96d3cd;" text="Back">
+                     <font>
+                        <Font name="Candara Bold" size="11.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="button" />
+                        <String fx:value="shadow" />
+                     </styleClass>
+                  </Button>
+                  <Label fx:id="errorLabel" layoutX="8.0" layoutY="277.0" prefHeight="46.0" prefWidth="388.0" textFill="RED" />
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
