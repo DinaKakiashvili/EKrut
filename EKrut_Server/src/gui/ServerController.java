@@ -179,7 +179,7 @@ public class ServerController implements Initializable{
 				portTextField.setText("5555");
 				DBNameField.setText("jdbc:mysql://localhost/ekrut?serverTimezone=IST");
 				DBUserTextField.setText("root");
-				DBPasswordTextField.setText("12345");
+				DBPasswordTextField.setText("Aa123456");
 				disconnectButton.setDisable(true);
 	}
 }
