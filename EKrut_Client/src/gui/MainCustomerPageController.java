@@ -2,6 +2,7 @@ package gui;
 
 import java.io.IOException;
 
+import client.ClientMissionHandler;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -20,8 +21,10 @@ public class MainCustomerPageController implements EventHandler<WindowEvent> {
 	private static String firstName;
 	private static String role;
 	private static String phone;
+	private static String id;
 
-    @FXML
+
+	@FXML
     private Button contactUs;
 
 	@FXML
@@ -57,16 +60,22 @@ public class MainCustomerPageController implements EventHandler<WindowEvent> {
 	public static void setPhone(String phone) {
 		MainCustomerPageController.phone = phone;
 	}
+	
+    public static String getId() {
+		return id;
+	}
+	public static void setId(String id) {
+		MainCustomerPageController.id = id;
+	}
 
     @FXML
 	public void initialize() {
     	hello.setText("Welcome, "+firstName);
     	userLog.setText("Phone number:"+phone+"\n"+"Account type:"+role);
 	}
+    
     public void start(Stage primaryStage) throws IOException {
     	//System.out.println("start");
-    	
-  
     	Parent root = FXMLLoader.load(getClass().getResource("/gui/MainCustomerPage.fxml"));
 		Scene scene = new Scene(root);
 		primaryStage.setTitle("E-Krut customer page");
@@ -77,12 +86,15 @@ public class MainCustomerPageController implements EventHandler<WindowEvent> {
 		
 	}
     
-   
-    
+      
     @FXML
-    void createNewOrder(ActionEvent event) {
-    	
+    void createNewOrder(ActionEvent event) throws IOException {
+    	((Node) event.getSource()).getScene().getWindow().hide();
+		final Stage primaryStage = new Stage();
+		ConfigurationScreenController subController = new ConfigurationScreenController(); 
+		subController.start(primaryStage);
     }
+
     
     @FXML
     void manageOrders(ActionEvent event) {
@@ -102,7 +114,7 @@ public class MainCustomerPageController implements EventHandler<WindowEvent> {
 		final Stage primaryStage = new Stage();
     	ClientLoginScreenController subController = new ClientLoginScreenController(); 
 		subController.start(primaryStage);
-		//change isLoggedIn to 0
+		ClientMissionHandler.logOut(id);
     }
     
 
@@ -111,7 +123,6 @@ public class MainCustomerPageController implements EventHandler<WindowEvent> {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 
 }

@@ -1,5 +1,6 @@
 package client;
 
+import java.io.IOException;
 import java.net.InetAddress;
 
 import java.util.ArrayList;
@@ -13,7 +14,9 @@ import gui.ClientUI;
 import gui.GetSubscribersController;
 import gui.MainCustomerPageController;
 import gui.ServiceRepresentativeScreen;
+import gui.ShoppingWindowController;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -124,6 +127,7 @@ public class ClientMissionHandler {
 				MainCustomerPageController.setFirstName(firstName);
 				MainCustomerPageController.setPhone(phone);
 				MainCustomerPageController.setRole(role);
+				MainCustomerPageController.setId(username);
 				MainCustomerPageController subController = new MainCustomerPageController();
 				subController.start(primaryStage);
 			} else if (role.equals("ServiceRepresentative")) {
@@ -169,7 +173,28 @@ public class ClientMissionHandler {
 		} else {
 			status.setText("The Attempt failed");
 		}
-
+	}
+	
+	public static void logOut(String id) {
+		MissionPack obj = new MissionPack(Mission.LOG_OUT, null, id);
+		ClientUI.chat.accept(obj);
+	}
+	
+	public static void CREATE_LOCAL_ORDER(String store,ActionEvent event) throws IOException {
+		MissionPack obj = new MissionPack(Mission.CREATE_LOCAL_ORDER, null,store);
+		ClientUI.chat.accept(obj);
+		final Stage primaryStage = new Stage();
+		obj = ClientUI.chat.getResponseFromServer();
+		if (obj.getResponse().equals(Response.LOCAL_ORDER_OPENED)) {
+			ShoppingWindowController.setProducts((ProductInStock[])obj.getInformation());
+			ShoppingWindowController.setFacility(store);
+			ShoppingWindowController shoppingWindowController=new ShoppingWindowController();
+			((Node) event.getSource()).getScene().getWindow().hide();
+			shoppingWindowController.start(primaryStage);
+		} 
+		else {
+			
+		}
 	}
 
 }

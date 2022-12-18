@@ -44,8 +44,21 @@ public class ServerMissionAnalyze {
 			break;
 		}
 		
+		case LOG_OUT:{
+			QueryExecutor.logOut(obj,DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
+		
 		}
 		
+		case CREATE_LOCAL_ORDER:{
+			QueryExecutor.CREATE_LOCAL_ORDER(obj,DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
+		}
+		
+			
+			
+			
+		}
 		
 	}
 }

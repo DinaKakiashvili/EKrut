@@ -229,4 +229,41 @@ public class QueryExecutor {
 
 	}
 
+	public static void logOut(MissionPack obj, Connection con) {
+		PreparedStatement ps = null;
+		String id=(String)obj.getInformation();
+		obj.setResponse(Response.LOG_OUT_SUCCESS);
+		try {
+			ps = con.prepareStatement("UPDATE ekrut.users SET isLoggedIn=\"0\" WHERE id=?");
+			ps.setString(1, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			obj.setResponse(Response.LOG_OUT_FAILED);
+		}
+		
+	}
+	
+	public static void CREATE_LOCAL_ORDER(MissionPack obj, Connection con) {
+		int i=0;
+		ProductInStock[] products=new ProductInStock[12];
+		PreparedStatement ps = null;
+		String store=(String)obj.getInformation();
+		obj.setResponse(Response.LOCAL_ORDER_OPENED);
+		try {
+			ps = con.prepareStatement("SELECT productName,quantity FROM ekrut.product_stock WHERE facility=?");
+			ps.setString(1, store);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				products[i]=new ProductInStock(rs.getString("productName"),rs.getInt("quantity"));
+				i++;
+			}
+			obj.setInformation(products);	
+		} catch (SQLException e) {
+			e.printStackTrace();
+			obj.setResponse(Response.LOCAL_ORDER_NOTOPENED);
+		}
+		
+	}
+
 }
