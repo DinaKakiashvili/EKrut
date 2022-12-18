@@ -44,6 +44,21 @@ public class ServerMissionAnalyze {
 			break;
 		}
 		
+		case GET_MONTHLY_CUSTOMER_REPORT: {
+			QueryExecutor.getCustomerReport(obj, DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
+		}
+		
+		case GET_MONTHLY_ORDERS_REPORT: {
+			QueryExecutor.getOrdersReport(obj, DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
+		}
+		
+		case GET_MONTHLY_STOCK_REPORT: {
+			QueryExecutor.getStockReport(obj, DatabaseConnector.getDatabaseConnectorInstance().getConnection());
+			break;
+		}
+		
 		}
 		
 		

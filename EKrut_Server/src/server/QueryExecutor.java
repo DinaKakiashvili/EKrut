@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -119,14 +120,15 @@ public class QueryExecutor {
 		String[] data = (String[]) obj.getInformation();
 		String username = data[0];
 		String password = data[1];
-		String role = null, phoneNumber = null, firstName = null;
-		String[] newData = new String[5];
+		String role = null, phoneNumber = null, firstName = null, region = null;
+		String[] newData = new String[6];
 
 		PreparedStatement ps = null;
 		boolean exists = false;
 
 		try {
-			ps = con.prepareStatement("SELECT users.username, password, role,phoneNumber,firstName FROM ekrut.users;");
+			ps = con.prepareStatement(
+					"SELECT users.username, password, role,phoneNumber,firstName,storeName FROM ekrut.users;");
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				if (rs.getString("username").equals(username) && rs.getString("password").equals(password)) {
@@ -134,6 +136,7 @@ public class QueryExecutor {
 					role = rs.getString("role");
 					phoneNumber = rs.getString("phoneNumber");
 					firstName = rs.getString("firstName");
+					region = rs.getString("storeName");
 					// System.out.println(username+" "+role);
 				}
 
@@ -149,7 +152,7 @@ public class QueryExecutor {
 			newData[2] = role;
 			newData[3] = phoneNumber;
 			newData[4] = firstName;
-
+			newData[5] = region;
 			obj.setInformation(newData);
 			try {
 				ps = con.prepareStatement("UPDATE ekrut.users SET isLoggedIn=\"1\" WHERE id=?");
@@ -226,6 +229,46 @@ public class QueryExecutor {
 			System.out.println("Exception- Executing statement-FROM_CUSTOMER_TO_SUBSCRIBER_FAILD");
 			obj.setResponse(Response.FROM_CUSTOMER_TO_SUBSCRIBER_FAILD);
 		}
+
+	}
+
+	public static void getOrdersReport(MissionPack obj, Connection con) {
+		ArrayList<String> reportDetails = (ArrayList<String>) obj.getInformation();
+		String month = reportDetails.get(0), year = reportDetails.get(1), region = reportDetails.get(2);
+		HashMap<Facility, Integer> mapOfFacilities = new HashMap<>();
+		int numOfTotalOrders = 0;
+		Facility facility;
+		PreparedStatement ps = null;
+		try {
+			ps = con.prepareStatement(
+					"SELECT SUM(ekrut.monthly_orders_reports.numOfTotalOrders), ekrut.monthly_orders_reports.store FROM ekrut.monthly_orders_reports  WHERE ekrut.monthly_orders_reports.month = ? AND ekrut.monthly_orders_reports.year = ? AND ekrut.monthly_orders_reports.region = ? GROUP BY ekrut.monthly_orders_reports.store");
+			ps.setString(1, month);
+			ps.setString(2, year);
+			ps.setString(3, region);
+			ResultSet rs = ps.executeQuery();
+			boolean hasNext = rs.next();
+			if (!hasNext) obj.setResponse(Response.GET_MONTHLY_ORDERS_REPORT_FAILD);
+			else {
+				while (hasNext) {
+					facility = Facility.valueOf(rs.getString("store"));
+					numOfTotalOrders = rs.getInt("SUM(ekrut.monthly_orders_reports.numOfTotalOrders)");
+					mapOfFacilities.put(facility, numOfTotalOrders);
+					hasNext = rs.next();
+				}
+				obj.setInformation(mapOfFacilities);
+				obj.setResponse(Response.GET_MONTHLY_ORDERS_REPORT_SUCCESS);	
+			}
+		} catch (SQLException e) {
+			System.out.println("Statement for getting Monthly Incomes Report has failed!");
+			obj.setResponse(Response.GET_MONTHLY_ORDERS_REPORT_FAILD);
+		}
+	}
+
+	public static void getStockReport(MissionPack obj, Connection con) {
+
+	}
+
+	public static void getCustomerReport(MissionPack obj, Connection con) {
 
 	}
 
