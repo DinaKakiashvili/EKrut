@@ -5,14 +5,15 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import common.*;
-import common.MissionPack;
 import entities.Subscriber;
 import entities.Customer;
 import gui.ClientLoginScreenController;
 import gui.ClientUI;
 import gui.GetSubscribersController;
 import gui.MainCustomerPageController;
+import gui.MainScreenManagerController;
 import gui.ServiceRepresentativeScreen;
+import gui.ViewOrdersReportScreenController;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -120,16 +121,24 @@ public class ClientMissionHandler {
 			((Node) event.getSource()).getScene().getWindow().hide();
 			final Stage primaryStage = new Stage();
 			if (role.equals("customer")) {
-
 				MainCustomerPageController.setFirstName(firstName);
 				MainCustomerPageController.setPhone(phone);
 				MainCustomerPageController.setRole(role);
 				MainCustomerPageController subController = new MainCustomerPageController();
 				subController.start(primaryStage);
 			} else if (role.equals("ServiceRepresentative")) {
-
 				ServiceRepresentativeScreen ServiceRepresentative = new ServiceRepresentativeScreen();
 				ServiceRepresentative.start(primaryStage);
+			} else if (role.equals("RegionalManager")) {
+				String region = ((String[]) obj.getInformation())[5];
+				MainScreenManagerController.setFirstName(firstName);
+				MainScreenManagerController.setPhone(phone);
+				MainScreenManagerController.setRole(role);
+				MainScreenManagerController.setRegion(region);
+				MainScreenManagerController RegionalManager = new MainScreenManagerController();
+				RegionalManager.start(primaryStage);
+			} else if (role.equals("CEO")) {
+				String storeName = ((String[]) obj.getInformation())[5];
 			}
 
 		} else {
@@ -170,6 +179,52 @@ public class ClientMissionHandler {
 			status.setText("The Attempt failed");
 		}
 
+	}
+
+	public static void GET_ORDERS_REPORT(MouseEvent event, Label errorLabel, ArrayList<String> reportDetails) {
+		MissionPack obj = new MissionPack(Mission.GET_MONTHLY_ORDERS_REPORT, null, reportDetails);
+		ClientUI.chat.accept(obj);
+		ViewOrdersReportScreenController.setDate(reportDetails.get(0) + " / " + reportDetails.get(1));
+		ViewOrdersReportScreenController.setRegion(reportDetails.get(2));
+		obj = ClientUI.chat.getResponseFromServer();
+		if (obj.getResponse() == Response.GET_MONTHLY_ORDERS_REPORT_FAILD) {
+			errorLabel.setVisible(true);
+			errorLabel.setText("No such report");
+		} else {
+			((Node) event.getSource()).getScene().getWindow().hide();
+			final Stage primaryStage = new Stage();
+			ViewOrdersReportScreenController.setInformation(obj.getInformation());
+			ViewOrdersReportScreenController showreportScreen = new ViewOrdersReportScreenController();
+			showreportScreen.start(primaryStage);
+		}
+	}
+
+	public static void GET_STOCK_REPORT(MouseEvent event, Label errorLabel, ArrayList<String> reportDetails) {
+		MissionPack obj = new MissionPack(Mission.GET_MONTHLY_STOCK_REPORT, null, reportDetails);
+		ClientUI.chat.accept(obj);
+		obj = ClientUI.chat.getResponseFromServer();
+		if (obj.getResponse() == Response.GET_MONTHLY_STOCK_REPORT_FAILD) {
+			errorLabel.setVisible(true);
+			errorLabel.setText("No such report");
+		} else {
+			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+			// scene.changeScreen(new Stage(), "/GuiClientScreens/MonthlyOrdersReport.fxml",
+			// true);
+		}
+	}
+
+	public static void GET_CUSTOMER_REPORT(MouseEvent event, Label errorLabel, ArrayList<String> reportDetails) {
+		MissionPack obj = new MissionPack(Mission.GET_MONTHLY_CUSTOMER_REPORT, null, reportDetails);
+		ClientUI.chat.accept(obj);
+		obj = ClientUI.chat.getResponseFromServer();
+		if (obj.getResponse() == Response.GET_MONTHLY_CUSTOMER_REPORT_FAILD) {
+			errorLabel.setVisible(true);
+			errorLabel.setText("No such report");
+		} else {
+			((Node) event.getSource()).getScene().getWindow().hide(); // hiding primary window
+			// scene.changeScreen(new Stage(), "/GuiClientScreens/MonthlyOrdersReport.fxml",
+			// true);
+		}
 	}
 
 }
